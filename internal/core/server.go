@@ -7,24 +7,27 @@ type Server struct {
 	Ip         string
 	Port       string
 	Router     rtr.Router
-	dbProvider DatabaseProvider
-}
-
-type DatabaseProvider struct {
-	db *sql.DB
+	DBProvider DatabaseProvider
+	Logger     *MyLogger //указатель из-за mutex
 }
 
 func NewdbProvider(db *sql.DB) *DatabaseProvider {
 	return &DatabaseProvider{db: db}
 }
 func (s *Server) SetServerDBprovider(dp *DatabaseProvider) {
-	s.dbProvider = *dp
+	s.DBProvider = *dp
 }
 
-func NewServer(ip string, port string, handler rtr.Router) *Server {
+func NewServer(ip string, port string, handler rtr.Router, logger *MyLogger) *Server {
 	return &Server{
 		Ip:     ip,
 		Port:   port,
 		Router: handler,
+		Logger: logger,
 	}
+}
+
+func (serv *Server) Close() {
+	serv.DBProvider.Close()
+	serv.Logger.Close()
 }

@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -20,16 +19,12 @@ func (serv *Server) POSTNewDataHandler(w http.ResponseWriter, r *http.Request) {
 	POSTMeteoData := POSTDataMeteo{}
 	err := readJSON(w, r, &POSTMeteoData)
 	if err != nil {
-		fmt.Println("read json error:", err.Error()) // добавить log свой заместо print
-		err2 := writeJSON(w, http.StatusInternalServerError, envelope{"error": "MethodNotAllowed, method: " + r.Method}, nil)
-		if err2 != nil {
-			fmt.Println(err.Error())
-		}
+		serv.Logger.LogERROR("POSTNewDataHandler, read json error:" + err.Error())
+		writeJSON(w, http.StatusBadRequest, envelope{"error": "incorrect json"}, nil)
 		return
 	}
-	err = serv.dbProvider.INSERTNewPOSTDataMeteo(&POSTMeteoData)
+	err = serv.DBProvider.INSERTNewPOSTDataMeteo(&POSTMeteoData)
 	if err != nil {
-		fmt.Println("error, INSERNewPOSTDataMeteo, db.Exec()", err.Error())
 		writeJSON(w, http.StatusInternalServerError, envelope{"error": "db.Exec"}, nil)
 		return
 	}
@@ -39,19 +34,14 @@ func (serv *Server) POSTNewDataHandler(w http.ResponseWriter, r *http.Request) {
 func MethodNotAllowedHandler(w http.ResponseWriter, r *http.Request) {
 	headers := http.Header{}
 	headers.Add("Content-Type", "application/json")
-	err := writeJSON(w, http.StatusMethodNotAllowed, envelope{"error": "MethodNotAllowed, method: " + r.Method}, headers)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	writeJSON(w, http.StatusMethodNotAllowed, envelope{"error": "MethodNotAllowed, method: " + r.Method}, headers)
 }
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	headers := http.Header{}
 	headers.Add("Content-Type", "application/json")
-	err := writeJSON(w, http.StatusNotFound, envelope{"error": "PathNotFound, path: " + r.URL.Path}, headers)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	writeJSON(w, http.StatusNotFound, envelope{"error": "PathNotFound, path: " + r.URL.Path}, headers)
+
 }
 
 func CORSMiddleware(w http.ResponseWriter, r *http.Request) {
