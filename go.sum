@@ -1,0 +1,4 @@
+github.com/Sergey-pixel-dev/router v0.0.7-beta h1:Wbp2duDrG3YyVgah+RJ13+RujbkA5OLcmq8PcCiH7rU=
+github.com/Sergey-pixel-dev/router v0.0.7-beta/go.mod h1:eQoxREe6M8WyfSEYOoGOkrNWOeD2W6Y3NWoS/ROSCYo=
+github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=
+github.com/lib/pq v1.10.9/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=

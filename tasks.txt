@@ -1,0 +1,14 @@
+//реализвать роутинг при помощи hast table (map)
+//
+/* ├── user
+│   ├── profile -> user_profile_handler
+│   └── :id -> user_id_handler
+└── product
+    └── :id
+        └── review -> product_review_handler */
+
+//type v struct{
+//  map[string]v
+//
+//}
+//пока будем использовать тупо сравнение в цикле
