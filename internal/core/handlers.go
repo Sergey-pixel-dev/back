@@ -11,11 +11,14 @@ Content-Type: application/json
 Content-Length: 54
 
  /*{"date":"121124","temp":"243","hum":"99","pres":"759"}*/
-
+/*{"date":"150405020106","temp":"243","hum":"99","pres":"759"}*/
 /*{"date":"2006-01-02 15:04:05","temp":"243","hum":"99","pres":"759"} -expected
  */
+/*
 
+ */
 func (serv *Server) POSTNewDataHandler(w http.ResponseWriter, r *http.Request) {
+	serv.Logger.LogINFO("POSTNewDataHanlder, POST IP: " + r.RemoteAddr)
 	POSTMeteoData := POSTDataMeteo{}
 	err := readJSON(w, r, &POSTMeteoData)
 	if err != nil {
@@ -42,6 +45,16 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	headers.Add("Content-Type", "application/json")
 	writeJSON(w, http.StatusNotFound, envelope{"error": "PathNotFound, path: " + r.URL.Path}, headers)
 
+}
+
+func (serv *Server) GETCurrentDataHandler(w http.ResponseWriter, r *http.Request) {
+	serv.Logger.LogINFO("GETCurrentDataHandler, POST IP: " + r.RemoteAddr)
+	CurData, err := serv.DBProvider.SELECTCurrentData()
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, envelope{"error": "db error"}, nil)
+		return
+	}
+	writeJSON(w, http.StatusOK, CurData, nil)
 }
 
 func CORSMiddleware(w http.ResponseWriter, r *http.Request) {

@@ -34,7 +34,8 @@ func main() {
 	dbp.DBProviderInit(host, port, user, password, dbname)
 	serv.SetServerDBprovider(dbp)
 
-	router.AddRoute(Router.NewRoute("POST", "/api/post", serv.POSTNewDataHandler))
+	router.AddRoute(Router.NewRoute("POST", "/data/post/", serv.POSTNewDataHandler))
+	router.AddRoute(Router.NewRoute("GET", "/data/current/", serv.GETCurrentDataHandler))
 	router.MethodNotAllowedHandler = http.HandlerFunc(core.MethodNotAllowedHandler)
 	router.NotFoundHandler = http.HandlerFunc(core.NotFoundHandler)
 	router.AddMiddleware(core.CORSMiddleware)

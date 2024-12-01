@@ -1,1 +1,2 @@
-ERROR, 2024-11-25 19:40:02.941, POSTNewDataHandler, read json error:invalid character 't' after object key
+INFO, 2024-12-01 20:36:13.704, GETCurrentDataHandler, POST IP: 127.0.0.1:34254
+INFO, 2024-12-01 20:36:16.053, GETCurrentDataHandler, POST IP: 127.0.0.1:34268
