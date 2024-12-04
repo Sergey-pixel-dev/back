@@ -26,7 +26,7 @@ func (serv *Server) POSTNewDataHandler(w http.ResponseWriter, r *http.Request) {
 		helper.WriteJSON(w, http.StatusBadRequest, helper.Envelope{"error": "incorrect json"}, nil)
 		return
 	}
-	//err = serv.DBProvider.INSERTNewPOSTDataMeteo(&POSTMeteoData)
+	err = serv.uc.InsertNewDataMeteo(&POSTMeteoData)
 	if err != nil {
 		helper.WriteJSON(w, http.StatusInternalServerError, helper.Envelope{"error": "db.Exec"}, nil)
 		return
@@ -49,12 +49,12 @@ func (serv *Server) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 
 func (serv *Server) GETCurrentDataHandler(w http.ResponseWriter, r *http.Request) {
 	serv.Logger.LogINFO("GETCurrentDataHandler, POST IP: " + r.RemoteAddr)
-	//CurData, err := serv.DBProvider.SELECTCurrentData()
-	/* if err != nil {
+	CurData, err := serv.uc.GetCurrentDataMeteo()
+	if err != nil {
 		helper.WriteJSON(w, http.StatusBadRequest, helper.Envelope{"error": "db error"}, nil)
 		return
-	} */
-	helper.WriteJSON(w, http.StatusOK, nil, nil)
+	}
+	helper.WriteJSON(w, http.StatusOK, CurData, nil)
 }
 
 func (serv *Server) CORSMiddleware(w http.ResponseWriter, r *http.Request) {

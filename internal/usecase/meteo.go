@@ -1,11 +1,13 @@
 package usecase
 
-type Usecase struct {
-	dbp DatabaseProvider
+import "meteo/internal/structs"
+
+func (u *Usecase) InsertNewDataMeteo(data *structs.POSTDataMeteo) error {
+	err := u.dbp.INSERTNewPOSTDataMeteo(data)
+	return err
 }
 
-func NewUsecase(dbp DatabaseProvider) *Usecase {
-	return &Usecase{
-		dbp: dbp,
-	}
+func (u *Usecase) GetCurrentDataMeteo() (*structs.CurrentData, error) {
+	cur, err := u.dbp.SELECTCurrentData()
+	return cur, err
 }
