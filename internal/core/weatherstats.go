@@ -13,3 +13,15 @@ type Main struct {
 	Pressure int     `json:"pressure"` // давление
 	Humidity int     `json:"humidity"` // влажность
 }
+
+type WeatherData struct {
+	LastDate string        `json:"last_date"` // Последний временной штамп
+	Data     []WeatherItem `json:"data"`      // Массив данных о погоде
+}
+
+type WeatherItem struct {
+	Date     string  `json:"date"`
+	Temp     float32 `json:"temp"`
+	Pressure int     `json:"pressure"`
+	Humidity int     `json:"humidity"`
+}
