@@ -11,3 +11,8 @@ func (u *Usecase) GetCurrentDataMeteo() (*structs.CurrentData, error) {
 	cur, err := u.dbp.SELECTCurrentData()
 	return cur, err
 }
+
+func (u *Usecase) GetCurrentDayDataMeteo() (*structs.WeatherData, error) {
+	data, err := u.dbp.SELECTCurrentDayData()
+	return data, err
+}

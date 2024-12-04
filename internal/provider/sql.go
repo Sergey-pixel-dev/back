@@ -1,8 +1,6 @@
 package provider
 
 import (
-	"database/sql"
-	"fmt"
 	"meteo/internal/structs"
 	"time"
 )
@@ -65,13 +63,34 @@ func (dbp *DatabaseProvider) SELECTCurrentData() (*structs.CurrentData, error) {
 
 }
 
-func (dbp *DatabaseProvider) DBProviderInit(host string, port int, user, password, dbname string) {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
-	db, err := sql.Open("postgres", psqlInfo)
+func (dbp *DatabaseProvider) SELECTCurrentDayData() (*structs.WeatherData, error) {
+	query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE DATE(date_esp) = (SELECT DATE(MAX(date_esp)) FROM meteo);")
 	if err != nil {
-		dbp.logger.LogFATAL(err.Error())
+		dbp.logger.LogERROR("Error select currentdata: " + err.Error())
+		return nil, err
 	}
-	dbp.db = db
+	var items []structs.WeatherItem
+	for query_rows.Next() {
+		var row DatabaseRow
+		if err := query_rows.Scan(&row.Id, &row.Date, &row.Temp, &row.Humidity, &row.Pressure, &row.Date_Esp); err != nil {
+			dbp.logger.LogERROR("Error query_rows.Scan(): " + err.Error())
+			continue
+		}
+		items = append(items, structs.WeatherItem{
+			Date:     row.Date_Esp,
+			Temp:     float32(row.Temp/10) + float32(row.Temp%10)/10.0,
+			Humidity: row.Humidity,
+			Pressure: row.Pressure,
+		})
+	}
+	if err = query_rows.Err(); err != nil {
+		dbp.logger.LogERROR("Error query_rows.Err(): " + err.Error())
+		return nil, err
+	}
+	CurDayData := structs.WeatherData{
+		LastDate: items[len(items)-1].Date,
+		Data:     items,
+	}
+	return &CurDayData, nil
+
 }

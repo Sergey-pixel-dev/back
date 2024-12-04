@@ -46,15 +46,23 @@ func (serv *Server) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	helper.WriteJSON(w, http.StatusNotFound, helper.Envelope{"error": "PathNotFound, path: " + r.URL.Path}, headers)
 
 }
-
 func (serv *Server) GETCurrentDataHandler(w http.ResponseWriter, r *http.Request) {
-	serv.Logger.LogINFO("GETCurrentDataHandler, POST IP: " + r.RemoteAddr)
+	serv.Logger.LogINFO("GETCurrentDataHandler, GET IP: " + r.RemoteAddr)
 	CurData, err := serv.uc.GetCurrentDataMeteo()
 	if err != nil {
 		helper.WriteJSON(w, http.StatusBadRequest, helper.Envelope{"error": "db error"}, nil)
 		return
 	}
 	helper.WriteJSON(w, http.StatusOK, CurData, nil)
+}
+func (serv *Server) GETCurrentDayDataHandler(w http.ResponseWriter, r *http.Request) {
+	serv.Logger.LogINFO("GETCurrentDayDataHandler, GET IP: " + r.RemoteAddr)
+	data, err := serv.uc.GetCurrentDayDataMeteo()
+	if err != nil {
+		helper.WriteJSON(w, http.StatusInternalServerError, helper.Envelope{"error": "server error"}, nil)
+		return
+	}
+	helper.WriteJSON(w, http.StatusOK, data, nil)
 }
 
 func (serv *Server) CORSMiddleware(w http.ResponseWriter, r *http.Request) {
