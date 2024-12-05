@@ -74,6 +74,10 @@ func (serv *Server) POSTRegisterNewUser(w http.ResponseWriter, r *http.Request) 
 	usjson := structs.UserJSON{}
 	helper.ReadJSON(w, r, &usjson)
 	err := serv.uc.RegisterNewUser(usjson.Email, usjson.Password)
+	if err.Error() == "already exists" {
+		helper.WriteJSON(w, http.StatusOK, helper.Envelope{"error": "already exists"}, nil)
+		return
+	}
 	if err != nil {
 		serv.Logger.LogERROR("Error usecase Register new user: " + err.Error())
 		helper.WriteJSON(w, http.StatusInternalServerError, helper.Envelope{"error": "internal error"}, nil)

@@ -29,8 +29,14 @@ func (u *Usecase) GetHistoricalData(from string, to string) (*structs.WeatherDat
 }
 
 // user
-// может зарегестрировать пользователя с двумя email одинаковыми
 func (u *Usecase) RegisterNewUser(email string, password string) error {
+	us, err2 := u.dbp.SELECTLoginUser(email)
+	if err2 != nil {
+		return err2
+	}
+	if us != nil {
+		return errors.New("already exists")
+	}
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
