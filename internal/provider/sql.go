@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"fmt"
 	"meteo/internal/structs"
 	"time"
 )
@@ -92,5 +93,46 @@ func (dbp *DatabaseProvider) SELECTCurrentDayData() (*structs.WeatherData, error
 		Data:     items,
 	}
 	return &CurDayData, nil
+
+}
+
+func (dbp *DatabaseProvider) SELECTHistoricalData(from string, to string) (*structs.WeatherData, error) {
+	//query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE date_esp BETWEEN '2024-12-01 00:00:00' AND '2024-12-05 23:59:59';")
+	fmt.Println(from)
+	fmt.Println(to)
+	query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE DATE(date_esp) BETWEEN $1 AND $2;", from, to)
+	if err != nil {
+		dbp.logger.LogERROR("Error select currentdata: " + err.Error())
+		return nil, err
+	}
+	var LastTime string
+	var items []structs.WeatherItem
+	for query_rows.Next() {
+		var row DatabaseRow
+		if err := query_rows.Scan(&row.Id, &row.Date, &row.Temp, &row.Humidity, &row.Pressure, &row.Date_Esp); err != nil {
+			dbp.logger.LogERROR("Error query_rows.Scan(): " + err.Error())
+			continue
+		}
+		items = append(items, structs.WeatherItem{
+			Date:     row.Date_Esp,
+			Temp:     float32(row.Temp/10) + float32(row.Temp%10)/10.0,
+			Humidity: row.Humidity,
+			Pressure: row.Pressure,
+		})
+		LastTime = row.Date_Esp
+	}
+	if err = query_rows.Err(); err != nil {
+		dbp.logger.LogERROR("Error query_rows.Err(): " + err.Error())
+		return nil, err
+	}
+	data := structs.WeatherData{}
+	if len(items) == 0 {
+		data.LastDate = "-"
+		data.Data = nil
+	} else {
+		data.LastDate = LastTime
+		data.Data = items
+	}
+	return &data, nil
 
 }

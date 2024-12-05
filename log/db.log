@@ -1,0 +1,15 @@
+ERROR, 2024-12-05 09:07:47.074, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:07:47.074, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:07:55.096, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:07:55.097, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:08:55.396, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:08:55.396, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:09:06.015, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:09:06.016, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:09:11.190, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:09:11.191, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 09:09:19.889, Error select currentdata: dial tcp [::1]:5432: connect: connection refused
+ERROR, 2024-12-05 13:20:14.699, Error select currentdata: pq: ошибка синтаксиса (примерное положение: "AND")
+ERROR, 2024-12-05 13:20:49.501, Error select currentdata: pq: ошибка синтаксиса (примерное положение: "AND")
+ERROR, 2024-12-05 13:21:15.053, Error select currentdata: pq: ошибка синтаксиса (примерное положение: "AND")
+ERROR, 2024-12-05 13:35:26.974, Error select currentdata: pq: got 2 parameters but the statement requires 0

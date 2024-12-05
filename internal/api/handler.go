@@ -64,6 +64,20 @@ func (serv *Server) GETCurrentDayDataHandler(w http.ResponseWriter, r *http.Requ
 	}
 	helper.WriteJSON(w, http.StatusOK, data, nil)
 }
+func (serv *Server) GETHistoricalDataHandler(w http.ResponseWriter, r *http.Request) {
+	serv.Logger.LogINFO("GETHistoricalDataHandler, GET IP: " + r.RemoteAddr)
+	query := r.URL.Query()
+	firstDateStr := query.Get("first_date")
+	lastDateStr := query.Get("last_date")
+	//проверит DateStr
+	data, err := serv.uc.GetHistoricalData(firstDateStr, lastDateStr)
+	if err != nil {
+		helper.WriteJSON(w, http.StatusInternalServerError, helper.Envelope{"error": "internal error"}, nil)
+		return
+	}
+	helper.WriteJSON(w, http.StatusOK, data, nil)
+
+}
 
 func (serv *Server) CORSMiddleware(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
