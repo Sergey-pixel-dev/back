@@ -31,6 +31,9 @@ func NewServer(ip string, port int, logger *mlg.MyLogger, uc Usecase) *Server {
 	router.AddRoute(rtr.NewRoute("GET", "/data/current/", api.GETCurrentDataHandler))
 	router.AddRoute(rtr.NewRoute("GET", "/data/currentday/", api.GETCurrentDayDataHandler))
 	router.AddRoute(rtr.NewRoute("GET", "/data/statistics", api.GETHistoricalDataHandler))
+	router.AddRoute(rtr.NewRoute("POST", "/user/register", api.POSTRegisterNewUser))
+	router.AddRoute(rtr.NewRoute("POST", "/user/login", api.POSTLoginUser))
+
 	router.MethodNotAllowedHandler = http.HandlerFunc(api.MethodNotAllowedHandler)
 	router.NotFoundHandler = http.HandlerFunc(api.NotFoundHandler)
 	router.AddMiddleware(api.CORSMiddleware)

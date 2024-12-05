@@ -32,3 +32,18 @@ type POSTDataMeteo struct {
 	Hum   string `json:"hum"`
 	Press string `json:"pres"`
 }
+
+type UserJSON struct {
+	Email    string `json:"email"` // Email - электронная почта
+	Password string `json:"password"`
+}
+
+type User struct {
+	ID        int    `psql:"id"`         // ID - уникальный идентификатор пользователя
+	Email     string `psql:"email"`      // Email - электронная почта
+	Password  string `psql:"password"`   // Password - хэш пароля
+	IsActive  bool   `psql:"is_active"`  // IsActive - статус активности пользователя
+	Role      string `psql:"role"`       // Role - роль пользователя
+	APIKey    string `psql:"api_key"`    // APIKey - ключ API
+	CreatedAt string `psql:"created_at"` // CreatedAt - дата и время создания записи
+}

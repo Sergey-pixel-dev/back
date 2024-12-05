@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"database/sql"
 	"fmt"
 	"meteo/internal/structs"
 	"time"
@@ -15,6 +16,8 @@ type DatabaseRow struct {
 	Date_Esp string `db:"date_esp"`
 }
 
+//data
+
 func (dbp *DatabaseProvider) INSERTNewPOSTDataMeteo(MeteoData *structs.POSTDataMeteo) error {
 	_, err := dbp.db.Exec("insert into meteo (date, temp, hum, pres, date_esp) values (($1), ($2), ($3), ($4), ($5))",
 		time.Now().Format("2006-01-02 15:04:05"), MeteoData.Temp, MeteoData.Hum, MeteoData.Press, MeteoData.Date)
@@ -23,7 +26,6 @@ func (dbp *DatabaseProvider) INSERTNewPOSTDataMeteo(MeteoData *structs.POSTDataM
 	}
 	return err
 }
-
 func (dbp *DatabaseProvider) SELECTCurrentData() (*structs.CurrentData, error) {
 	query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE DATE(date_esp) = (SELECT DATE(MAX(date_esp)) FROM meteo);")
 	if err != nil {
@@ -63,7 +65,6 @@ func (dbp *DatabaseProvider) SELECTCurrentData() (*structs.CurrentData, error) {
 	return &CurData, nil
 
 }
-
 func (dbp *DatabaseProvider) SELECTCurrentDayData() (*structs.WeatherData, error) {
 	query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE DATE(date_esp) = (SELECT DATE(MAX(date_esp)) FROM meteo);")
 	if err != nil {
@@ -95,7 +96,6 @@ func (dbp *DatabaseProvider) SELECTCurrentDayData() (*structs.WeatherData, error
 	return &CurDayData, nil
 
 }
-
 func (dbp *DatabaseProvider) SELECTHistoricalData(from string, to string) (*structs.WeatherData, error) {
 	//query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE date_esp BETWEEN '2024-12-01 00:00:00' AND '2024-12-05 23:59:59';")
 	fmt.Println(from)
@@ -135,4 +135,29 @@ func (dbp *DatabaseProvider) SELECTHistoricalData(from string, to string) (*stru
 	}
 	return &data, nil
 
+}
+
+//user
+
+func (dbp *DatabaseProvider) INSERTNewUser(user *structs.User) error {
+	_, err := dbp.db.Exec(`insert into users (email, password, is_active, role, api_key) 
+	values (($1), ($2), ($3), ($4), ($5));`, user.Email, user.Password, user.IsActive, user.Role, user.APIKey)
+	if err != nil {
+		dbp.logger.LogERROR("Error insertnewuser " + err.Error())
+		return err
+	}
+	return nil
+}
+
+func (dbp *DatabaseProvider) SELECTLoginUser(email string) (*structs.User, error) {
+	row := dbp.db.QueryRow(`select * from users where email = ($1);`, email)
+	us := structs.User{}
+	err := row.Scan(&us.ID, &us.Email, &us.Password, &us.IsActive, &us.Role, &us.APIKey, &us.CreatedAt)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		dbp.logger.LogERROR("Error SELECTLoginUser: " + err.Error())
+		return nil, err
+	}
+	return &us, nil
 }

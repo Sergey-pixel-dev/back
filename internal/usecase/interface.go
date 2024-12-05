@@ -9,4 +9,6 @@ type DatabaseProvider interface {
 	SELECTCurrentData() (*structs.CurrentData, error)
 	SELECTCurrentDayData() (*structs.WeatherData, error)
 	SELECTHistoricalData(from string, to string) (*structs.WeatherData, error)
+	INSERTNewUser(user *structs.User) error
+	SELECTLoginUser(email string) (*structs.User, error)
 }

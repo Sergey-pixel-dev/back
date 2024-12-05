@@ -1,9 +1,10 @@
-github.com/Sergey-pixel-dev/mylog v0.0.8 h1:eRQ/UbMwNpsnMFTjlOL0KILkNb9J82dYOL5V0G0g9rY=
-github.com/Sergey-pixel-dev/mylog v0.0.8/go.mod h1:nkT7dCoT0s++ebOt7j3O/HGUFQpb6zz+b6St/fc7KxQ=
 github.com/Sergey-pixel-dev/router v0.0.7-beta h1:Wbp2duDrG3YyVgah+RJ13+RujbkA5OLcmq8PcCiH7rU=
 github.com/Sergey-pixel-dev/router v0.0.7-beta/go.mod h1:eQoxREe6M8WyfSEYOoGOkrNWOeD2W6Y3NWoS/ROSCYo=
 github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=
 github.com/lib/pq v1.10.9/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=
+golang.org/x/crypto v0.30.0 h1:RwoQn3GkWiMkzlX562cLB7OxWvjH1L8xutO2WoJcRoY=
+golang.org/x/crypto v0.30.0/go.mod h1:kDsLvtWBEx7MV9tJOj9bnXsPbxwJQ6csT/x4KIN4Ssk=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
 gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
