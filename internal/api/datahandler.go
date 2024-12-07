@@ -68,12 +68,7 @@ func (serv *Server) GETHistoricalDataHandler(w http.ResponseWriter, r *http.Requ
 
 }
 
-
 //other
-
-func (serv *Server) CORSMiddleware(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-}
 
 func (serv *Server) MethodNotAllowedHandler(w http.ResponseWriter, r *http.Request) {
 	headers := http.Header{}
