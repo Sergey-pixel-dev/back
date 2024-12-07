@@ -3,6 +3,7 @@ package usecase
 import (
 	"errors"
 	"meteo/internal/structs"
+	"strings"
 )
 
 // ВАЖНО! ДОБАВИТЬ ЛОГГИРОВАНИЕ USECASE
@@ -13,7 +14,7 @@ func (u *Usecase) InsertNewDataMeteo(data *structs.POSTDataMeteo) error {
 }
 
 func (u *Usecase) GetCurrentDataMeteo(remoteAddr, apikey string) (*structs.CurrentData, error) {
-	if remoteAddr != "localhost:5500" {
+	if strings.Contains(remoteAddr, "localhost") {
 		if u.dbp.SELECTApiKey(apikey) {
 			if u.limiter.Allow(apikey) {
 				cur, err := u.dbp.SELECTCurrentData()
@@ -31,7 +32,7 @@ func (u *Usecase) GetCurrentDataMeteo(remoteAddr, apikey string) (*structs.Curre
 }
 
 func (u *Usecase) GetCurrentDayDataMeteo(remoteAddr, apikey string) (*structs.WeatherData, error) {
-	if remoteAddr != "localhost:5500" {
+	if strings.Contains(remoteAddr, "localhost") {
 		if u.dbp.SELECTApiKey(apikey) {
 			if u.limiter.Allow(apikey) {
 				data, err := u.dbp.SELECTCurrentDayData()
@@ -47,7 +48,7 @@ func (u *Usecase) GetCurrentDayDataMeteo(remoteAddr, apikey string) (*structs.We
 	return data, err
 }
 func (u *Usecase) GetHistoricalData(remoteAddr, apikey, from, to string) (*structs.WeatherData, error) {
-	if remoteAddr != "localhost:5500" {
+	if strings.Contains(remoteAddr, "localhost") {
 		if u.dbp.SELECTApiKey(apikey) {
 			if u.limiter.Allow(apikey) {
 				data, err := u.dbp.SELECTHistoricalData(from, to)
