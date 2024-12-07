@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	mlg "meteo/internal/logger"
+	mlg "meteo/internal/libs/logger"
 )
 
 type DatabaseProvider struct {

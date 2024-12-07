@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	mlg "meteo/internal/logger"
+	mlg "meteo/internal/libs/logger"
 
 	rtr "github.com/Sergey-pixel-dev/router"
 )

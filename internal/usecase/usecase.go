@@ -1,11 +1,15 @@
 package usecase
 
+import mlg "meteo/internal/libs/logger"
+
 type Usecase struct {
-	dbp DatabaseProvider
+	dbp    DatabaseProvider
+	logger *mlg.MyLogger
 }
 
-func NewUsecase(dbp DatabaseProvider) *Usecase {
+func NewUsecase(dbp DatabaseProvider, logger *mlg.MyLogger) *Usecase {
 	return &Usecase{
-		dbp: dbp,
+		dbp:    dbp,
+		logger: logger,
 	}
 }

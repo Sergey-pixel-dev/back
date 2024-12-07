@@ -9,7 +9,7 @@ import (
 	"os"
 
 	_ "github.com/lib/pq"
-	mlg "meteo/internal/logger"
+	mlg "meteo/internal/libs/logger"
 )
 
 func main() {
@@ -21,14 +21,17 @@ func main() {
 
 	serv_file_log, _ := os.OpenFile("../log/serv.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	db_file_log, _ := os.OpenFile("../log/db.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	uc_file_log, _ := os.OpenFile("../log/uc.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	logger_serv := mlg.NewLogger()
 	logger_serv.SetDescriptor(serv_file_log)
 	logger_db := mlg.NewLogger()
 	logger_db.SetDescriptor(db_file_log)
+	logger_uc := mlg.NewLogger()
+	logger_uc.SetDescriptor(uc_file_log)
 
 	dbp := provider.NewDBProvider(cfg.DB.Host, cfg.DB.Port, cfg.DB.User, cfg.DB.Password, cfg.DB.DBname, logger_db)
-	use := usecase.NewUsecase(dbp)
+	use := usecase.NewUsecase(dbp, logger_uc)
 	srv := api.NewServer(cfg.IP, cfg.Port, logger_serv, use)
 	srv.Run()
 }
