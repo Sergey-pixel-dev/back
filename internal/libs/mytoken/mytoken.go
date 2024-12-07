@@ -82,7 +82,7 @@ func NewToken(header map[string]interface{}, payload map[string]interface{}, key
 
 func (token *Token) SendToken(w http.ResponseWriter) error {
 	tokenJSON, err := json.Marshal(envelope{"access_token": token.Raw})
-	if err != nil {
+	if err != nil { //зачем? если все ранво через New токен создается
 		return errors.New("не удалось сериализовать токен")
 	}
 	w.Header().Set("Content-Type", "application/json")

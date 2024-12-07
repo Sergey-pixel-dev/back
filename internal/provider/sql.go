@@ -140,8 +140,8 @@ func (dbp *DatabaseProvider) SELECTHistoricalData(from string, to string) (*stru
 //user
 
 func (dbp *DatabaseProvider) INSERTNewUser(user *structs.User) error {
-	_, err := dbp.db.Exec(`insert into users (email, password, is_active, role, api_key) 
-	values (($1), ($2), ($3), ($4), ($5));`, user.Email, user.Password, user.IsActive, user.Role, user.APIKey)
+	err := dbp.db.QueryRow(`INSERT INTO users (email, password, is_active, role, api_key) 
+VALUES (\$1, \$2, \$3, \$4, \$5) RETURNING id;`, user.Email, user.Password, user.IsActive, user.Role, user.APIKey).Scan(&user.ID)
 	if err != nil {
 		dbp.logger.LogERROR("Error insertnewuser " + err.Error())
 		return err

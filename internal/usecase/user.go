@@ -2,24 +2,26 @@ package usecase
 
 import (
 	"errors"
+	"meteo/internal/libs/mytoken"
 	"meteo/internal/structs"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (u *Usecase) RegisterNewUser(email string, password string) error {
+func (u *Usecase) RegisterNewUser(email string, password string) (*mytoken.Token, *mytoken.Token, error) {
 	us, err2 := u.dbp.SELECTLoginUser(email)
 	if err2 != nil {
-		return err2
+		return nil, nil, err2
 	}
 	if us != nil {
 		u.logger.LogINFO("Users with" + email + "already exists")
-		return errors.New("already exists")
+		return nil, nil, errors.New("already exists")
 	}
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		u.logger.LogERROR("bcrypt GenerateFromPassword: " + err.Error())
-		return err
+		return nil, nil, err
 	}
 	NewUser := structs.User{ //подумать над абстрагированием user создать отдельно его методы, потом
 		Email:    email,
@@ -29,7 +31,19 @@ func (u *Usecase) RegisterNewUser(email string, password string) error {
 		APIKey:   "none",
 	}
 	err = u.dbp.INSERTNewUser(&NewUser)
-	return err
+	if err != nil {
+		return nil, nil, err
+	}
+	accessToken, _ := mytoken.NewToken(map[string]interface{}{"alg": "HS256", "typ": "JWT"},
+		map[string]interface{}{"userid": NewUser.ID, "exp": time.Now().Add(time.Hour).Unix()},
+		"meteo",
+	)
+	refreshToken, _ := mytoken.NewToken(map[string]interface{}{"alg": "HS256", "typ": "JWT"},
+		map[string]interface{}{"userid": NewUser.ID, "exp": time.Now().Add(24 * time.Hour).Unix()},
+		"meteo",
+	)
+	return accessToken, refreshToken, nil
+
 }
 
 func (u *Usecase) LoginUser(email string, password string) error {
