@@ -66,7 +66,6 @@ func (serv *Server) GETUserInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	helper.WriteJSON(w, 200, helper.Envelope{"email": user.Email, "api_key": user.APIKey}, nil)
 }
-
 func (serv *Server) corsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:5500")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")

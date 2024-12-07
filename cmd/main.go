@@ -8,8 +8,10 @@ import (
 	"meteo/internal/usecase"
 	"os"
 
-	_ "github.com/lib/pq"
 	mlg "meteo/internal/libs/logger"
+	"meteo/internal/libs/ratelimiter"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -30,8 +32,10 @@ func main() {
 	logger_uc := mlg.NewLogger()
 	logger_uc.SetDescriptor(uc_file_log)
 
+	rt := ratelimiter.NewRateLimiter()
+
 	dbp := provider.NewDBProvider(cfg.DB.Host, cfg.DB.Port, cfg.DB.User, cfg.DB.Password, cfg.DB.DBname, logger_db)
-	use := usecase.NewUsecase(dbp, logger_uc)
+	use := usecase.NewUsecase(dbp, logger_uc, rt)
 	srv := api.NewServer(cfg.IP, cfg.Port, logger_serv, use)
 	srv.Run()
 }

@@ -2,7 +2,6 @@ package provider
 
 import (
 	"database/sql"
-	"fmt"
 	"meteo/internal/structs"
 	"time"
 )
@@ -98,8 +97,7 @@ func (dbp *DatabaseProvider) SELECTCurrentDayData() (*structs.WeatherData, error
 }
 func (dbp *DatabaseProvider) SELECTHistoricalData(from string, to string) (*structs.WeatherData, error) {
 	//query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE date_esp BETWEEN '2024-12-01 00:00:00' AND '2024-12-05 23:59:59';")
-	fmt.Println(from)
-	fmt.Println(to)
+
 	query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE DATE(date_esp) BETWEEN $1 AND $2;", from, to)
 	if err != nil {
 		dbp.logger.LogERROR("Error select currentdata: " + err.Error())
@@ -137,7 +135,12 @@ func (dbp *DatabaseProvider) SELECTHistoricalData(from string, to string) (*stru
 
 }
 
-//user
+// user
+func (dbp *DatabaseProvider) SELECTApiKey(apikey string) bool {
+	row := dbp.db.QueryRow(`select id from users where api_key = ($1);`, apikey)
+	err := row.Scan()
+	return err != sql.ErrNoRows
+}
 
 func (dbp *DatabaseProvider) INSERTNewUser(user *structs.User) error {
 	err := dbp.db.QueryRow(`INSERT INTO users (email, password, is_active, role, api_key) 
