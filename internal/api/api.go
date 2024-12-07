@@ -34,12 +34,14 @@ func NewServer(ip string, port int, logger *mlg.MyLogger, uc Usecase) *Server {
 
 	router.AddRoute(rtr.NewRoute("POST", "/user/register", api.POSTRegisterNewUser))
 	router.AddRoute(rtr.NewRoute("POST", "/user/login", api.POSTLoginUser))
+	router.AddRoute(rtr.NewRoute("GET", "/user/account", api.GETUserInfo))
+	router.AddRoute(rtr.NewRoute("OPTIONS", "/user/account", api.corsHandler))
 	router.AddRoute(rtr.NewRoute("OPTIONS", "/user/register", api.corsHandler))
 	router.AddRoute(rtr.NewRoute("OPTIONS", "/user/login", api.corsHandler))
 
 	router.MethodNotAllowedHandler = http.HandlerFunc(api.MethodNotAllowedHandler)
 	router.NotFoundHandler = http.HandlerFunc(api.NotFoundHandler)
-	router.AddMiddleware(api.corsHandler)
+	router.AddMiddleware(api.corsMiddlewire)
 	return api
 }
 

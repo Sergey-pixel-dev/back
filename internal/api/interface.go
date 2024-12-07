@@ -12,4 +12,5 @@ type Usecase interface {
 	GetHistoricalData(from string, to string) (*structs.WeatherData, error)
 	RegisterNewUser(email string, password string) (*mytoken.Token, *mytoken.Token, error)
 	LoginUser(email string, password string) (*mytoken.Token, *mytoken.Token, error)
+	GetUserInfo(tokenAccess *mytoken.Token) (*structs.User, error)
 }

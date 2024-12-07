@@ -154,9 +154,22 @@ func (dbp *DatabaseProvider) SELECTLoginUser(email string) (*structs.User, error
 	us := structs.User{}
 	err := row.Scan(&us.ID, &us.Email, &us.Password, &us.IsActive, &us.Role, &us.APIKey, &us.CreatedAt)
 	if err == sql.ErrNoRows {
-		return nil, nil
+		return nil, nil //переписать
 	} else if err != nil {
 		dbp.logger.LogERROR("Error SELECTLoginUser: " + err.Error())
+		return nil, err
+	}
+	return &us, nil
+}
+
+func (dbp *DatabaseProvider) SELECTUserByID(userID int) (*structs.User, error) {
+	row := dbp.db.QueryRow(`select * from users where id = ($1);`, userID)
+	us := structs.User{}
+	err := row.Scan(&us.ID, &us.Email, &us.Password, &us.IsActive, &us.Role, &us.APIKey, &us.CreatedAt)
+	if err == sql.ErrNoRows {
+		return nil, nil //переписать
+	} else if err != nil {
+		dbp.logger.LogERROR("Error SELECTUserByID: " + err.Error())
 		return nil, err
 	}
 	return &us, nil

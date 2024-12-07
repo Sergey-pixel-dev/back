@@ -2,6 +2,8 @@ package api
 
 import (
 	"meteo/internal/helper"
+	//mylog "meteo/internal/libs/logger"
+	"meteo/internal/libs/mytoken"
 	"meteo/internal/structs"
 	"net/http"
 )
@@ -34,7 +36,7 @@ func (serv *Server) POSTLoginUser(w http.ResponseWriter, r *http.Request) {
 		refreshToken.SendCookieToken("refresh_token", "/user/login/refresh", w)
 		return
 	}
-	if err.Error() == "Incorrect email" || err.Error() == "Incorrect password" {
+	if err.Error() == "Incorrect email" || err.Error() == "Wrong password" {
 		serv.Logger.LogINFO("POSTLoginUser: incorrect password or email")
 		helper.WriteJSON(w, http.StatusUnauthorized, helper.Envelope{"error": "incorrect password or email"}, nil)
 		return
@@ -46,13 +48,35 @@ func (serv *Server) POSTLoginUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func (serv *Server) GETUserInfo(w http.ResponseWriter, r *http.Request) {
+	rawToken := r.Header.Get("authorization")[7:]
+	if rawToken == "" {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect token"}, nil)
+		return
+	}
+	tokenAccess, err := mytoken.GetToken(rawToken)
+	if err != nil {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect token"}, nil)
+		return
+	}
+	user, err2 := serv.uc.GetUserInfo(tokenAccess)
+	if err2 != nil {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "invalid token"}, nil)
+		return
+	}
+	helper.WriteJSON(w, 200, helper.Envelope{"email": user.Email, "api_key": user.APIKey}, nil)
+}
+
 func (serv *Server) corsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:5500")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	if r.Method == "OPTIONS" {
-		//w.WriteHeader(http.StatusOK)
-		return
-	}
+	w.WriteHeader(http.StatusOK)
+}
+func (serv *Server) corsMiddlewire(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:5500")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
 }

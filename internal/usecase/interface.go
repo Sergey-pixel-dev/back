@@ -11,4 +11,5 @@ type DatabaseProvider interface {
 	SELECTHistoricalData(from string, to string) (*structs.WeatherData, error)
 	INSERTNewUser(user *structs.User) error
 	SELECTLoginUser(email string) (*structs.User, error)
+	SELECTUserByID(userID int) (*structs.User, error)
 }
