@@ -6,13 +6,17 @@ import (
 )
 
 type RateLimiter struct {
+	limit    int
+	time     int
 	mu       sync.Mutex
 	requests map[string]int
 }
 
-func NewRateLimiter() *RateLimiter {
+func NewRateLimiter(limit, time int) *RateLimiter {
 	rl := &RateLimiter{
 		requests: make(map[string]int),
+		limit:    limit,
+		time:     time,
 	}
 	go rl.Clear()
 	return rl
@@ -22,7 +26,7 @@ func (rl *RateLimiter) Allow(apiKey string) bool {
 	rl.mu.Lock()
 	defer rl.mu.Unlock()
 
-	if rl.requests[apiKey] >= 5 {
+	if rl.requests[apiKey] >= rl.limit {
 		return false
 	}
 
@@ -39,7 +43,7 @@ func (rl *RateLimiter) Reset() {
 	}
 }
 func (rl *RateLimiter) Clear() {
-	ticker := time.NewTicker(1 * time.Minute)
+	ticker := time.NewTicker(time.Duration(rl.time) * time.Millisecond)
 	defer ticker.Stop()
 
 	for {

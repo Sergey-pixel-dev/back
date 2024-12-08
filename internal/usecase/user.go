@@ -10,6 +10,7 @@ import (
 )
 
 func (u *Usecase) RegisterNewUser(email string, password string) (*mytoken.Token, *mytoken.Token, error) {
+	u.logger.LogINFO("Attempt to register new user: " + email)
 	us, err2 := u.dbp.SELECTLoginUser(email)
 	if err2 != nil {
 		return nil, nil, err2
@@ -35,29 +36,29 @@ func (u *Usecase) RegisterNewUser(email string, password string) (*mytoken.Token
 		return nil, nil, err
 	}
 	accessToken, _ := mytoken.NewToken(map[string]interface{}{"alg": "HS256", "typ": "JWT"},
-		map[string]interface{}{"userid": NewUser.ID, "exp": time.Now().Add(20 * time.Second).Unix()},
+		map[string]interface{}{"userid": NewUser.ID, "exp": time.Now().Add(time.Hour).Unix()},
 		"meteo",
 	)
 	refreshToken, _ := mytoken.NewToken(map[string]interface{}{"alg": "HS256", "typ": "JWT"},
-		map[string]interface{}{"userid": NewUser.ID, "exp": time.Now().Add(24 * time.Hour).Unix()},
+		map[string]interface{}{"userid": NewUser.ID, "exp": time.Now().Add(72 * time.Hour).Unix()},
 		"meteo",
 	)
+	u.logger.LogINFO("New user " + email + " has been successfully registered")
 	return accessToken, refreshToken, nil
 
 }
 
 func (u *Usecase) LoginUser(email string, password string) (*mytoken.Token, *mytoken.Token, error) {
+	u.logger.LogINFO("Attempt to login from user: " + email)
 	user, err := u.dbp.SELECTLoginUser(email)
 	if err != nil {
 		return nil, nil, err
 	}
 	if user == nil {
-		u.logger.LogINFO("No registered user with " + email)
 		return nil, nil, errors.New("Incorrect email")
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
-		u.logger.LogINFO("Wrong password " + email)
 		return nil, nil, errors.New("Wrong password")
 	}
 	accessToken, _ := mytoken.NewToken(map[string]interface{}{"alg": "HS256", "typ": "JWT"},
@@ -68,6 +69,7 @@ func (u *Usecase) LoginUser(email string, password string) (*mytoken.Token, *myt
 		map[string]interface{}{"userid": user.ID, "exp": time.Now().Add(24 * time.Hour).Unix()},
 		"meteo",
 	)
+	u.logger.LogINFO("User " + email + " logged in successfully")
 	return accessToken, refreshToken, nil
 
 }
@@ -83,8 +85,5 @@ func (u *Usecase) GetUserInfo(tokenAccess *mytoken.Token) (*structs.User, error)
 		return nil, errors.New("invalid token")
 	}
 	user, err := u.dbp.SELECTUserByID(int(tokenAccess.Payload["userid"].(float64)))
-	if err != nil {
-		return nil, err //маловероятно, так как в токене по идее уже есть нормлаьной id (он ведь был)
-	}
 	return user, err
 }

@@ -5,3 +5,4 @@ ERROR, 2024-12-07 16:08:12.601, Error select currentdata: dial tcp [::1]:5432: c
 ERROR, 2024-12-07 16:25:13.477, Error insertnewuser pq: ошибка синтаксиса (примерное положение: "\")
 ERROR, 2024-12-07 16:25:27.414, Error insertnewuser pq: ошибка синтаксиса (примерное положение: "\")
 ERROR, 2024-12-07 16:25:39.643, Error insertnewuser pq: ошибка синтаксиса (примерное положение: "\")
+ERROR, 2024-12-08 19:30:53.551, Error select currentdata: dial tcp [::1]:5432: connect: connection refused

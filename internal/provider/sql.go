@@ -35,7 +35,7 @@ func (dbp *DatabaseProvider) SELECTCurrentData() (*structs.CurrentData, error) {
 	var MinTemp int
 	MinTemp = 1000
 	MaxTemp = -1000
-	var SliceRows []DatabaseRow
+	var LastRow *DatabaseRow
 	for query_rows.Next() {
 		var row DatabaseRow
 		if err := query_rows.Scan(&row.Id, &row.Date, &row.Temp, &row.Humidity, &row.Pressure, &row.Date_Esp); err != nil {
@@ -44,13 +44,13 @@ func (dbp *DatabaseProvider) SELECTCurrentData() (*structs.CurrentData, error) {
 		}
 		MaxTemp = max(MaxTemp, row.Temp)
 		MinTemp = min(MinTemp, row.Temp)
-		SliceRows = append(SliceRows, row)
+		LastRow = &row
 	}
 	if err = query_rows.Err(); err != nil {
 		dbp.logger.LogERROR("Error query_rows.Err(): " + err.Error())
 		return nil, err
 	}
-	LastRow := SliceRows[len(SliceRows)-1]
+
 	CurData := structs.CurrentData{
 		LastDate: LastRow.Date_Esp,
 		Main: structs.Main{
@@ -70,7 +70,8 @@ func (dbp *DatabaseProvider) SELECTCurrentDayData() (*structs.WeatherData, error
 		dbp.logger.LogERROR("Error select currentdata: " + err.Error())
 		return nil, err
 	}
-	var items []structs.WeatherItem
+
+	var items []structs.WeatherItem //возможно, (из-за того, что часто добавляются данные, и мы по ним не итерируемся) лучше использовать list
 	for query_rows.Next() {
 		var row DatabaseRow
 		if err := query_rows.Scan(&row.Id, &row.Date, &row.Temp, &row.Humidity, &row.Pressure, &row.Date_Esp); err != nil {
@@ -96,7 +97,6 @@ func (dbp *DatabaseProvider) SELECTCurrentDayData() (*structs.WeatherData, error
 
 }
 func (dbp *DatabaseProvider) SELECTHistoricalData(from string, to string) (*structs.WeatherData, error) {
-	//query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE date_esp BETWEEN '2024-12-01 00:00:00' AND '2024-12-05 23:59:59';")
 
 	query_rows, err := dbp.db.Query("SELECT * FROM meteo WHERE DATE(date_esp) BETWEEN $1 AND $2;", from, to)
 	if err != nil {
@@ -104,7 +104,7 @@ func (dbp *DatabaseProvider) SELECTHistoricalData(from string, to string) (*stru
 		return nil, err
 	}
 	var LastTime string
-	var items []structs.WeatherItem
+	var items []structs.WeatherItem //возможно, (из-за того, что часто добавляются данные, и мы по ним не итерируемся) лучше использовать list
 	for query_rows.Next() {
 		var row DatabaseRow
 		if err := query_rows.Scan(&row.Id, &row.Date, &row.Temp, &row.Humidity, &row.Pressure, &row.Date_Esp); err != nil {

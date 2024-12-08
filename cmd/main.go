@@ -32,7 +32,7 @@ func main() {
 	logger_uc := mlg.NewLogger()
 	logger_uc.SetDescriptor(uc_file_log)
 
-	rt := ratelimiter.NewRateLimiter()
+	rt := ratelimiter.NewRateLimiter(5, 5000)
 
 	dbp := provider.NewDBProvider(cfg.DB.Host, cfg.DB.Port, cfg.DB.User, cfg.DB.Password, cfg.DB.DBname, logger_db)
 	use := usecase.NewUsecase(dbp, logger_uc, rt)

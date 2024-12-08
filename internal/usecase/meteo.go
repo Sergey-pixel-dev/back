@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-// ВАЖНО! ДОБАВИТЬ ЛОГГИРОВАНИЕ USECASE
 // data
 func (u *Usecase) InsertNewDataMeteo(data *structs.POSTDataMeteo) error {
 	err := u.dbp.INSERTNewPOSTDataMeteo(data)
@@ -20,6 +19,7 @@ func (u *Usecase) GetCurrentDataMeteo(remoteAddr, apikey string) (*structs.Curre
 				cur, err := u.dbp.SELECTCurrentData()
 				return cur, err
 			} else {
+				//u.logger.LogWARN(remoteAddr + " has rate limit exceeded")
 				return nil, errors.New("rate limit exceeded")
 			}
 		} else {
