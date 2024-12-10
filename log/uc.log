@@ -106,3 +106,35 @@ INFO, 2024-12-10 18:19:37.585, Attempt to login from user: sonin.serej@yandex.ru
 INFO, 2024-12-10 18:19:37.651, User sonin.serej@yandex.ru logged in successfully
 INFO, 2024-12-10 18:28:01.620, Attempt to login from user: sonin.serej@yandex.ru
 INFO, 2024-12-10 18:28:01.711, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 19:34:01.496, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:34:05.515, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:34:05.599, User serg@yandex.ru logged in successfully
+INFO, 2024-12-10 19:35:19.685, Attempt to change password from user: 31
+INFO, 2024-12-10 19:35:28.326, Attempt to change password from user: 31
+INFO, 2024-12-10 19:36:37.439, Attempt to change password from user: 31
+INFO, 2024-12-10 19:38:08.321, Attempt to change password from user: 31
+INFO, 2024-12-10 19:38:39.707, Attempt to change password from user: 31
+INFO, 2024-12-10 19:40:39.524, Attempt to change password from user: 31
+INFO, 2024-12-10 19:41:05.491, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:41:14.401, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:41:17.833, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:41:17.910, User serg@yandex.ru logged in successfully
+INFO, 2024-12-10 19:41:45.369, Attempt to change password from user: 31
+INFO, 2024-12-10 19:41:45.525, Attempt to change password from user: 31
+INFO, 2024-12-10 19:42:13.092, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:42:19.129, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:42:19.238, User serg@yandex.ru logged in successfully
+INFO, 2024-12-10 19:43:50.370, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:43:50.419, User serg@yandex.ru logged in successfully
+INFO, 2024-12-10 19:44:04.250, Attempt to change password from user: 31
+INFO, 2024-12-10 19:44:04.413, Attempt to change password from user: 31
+INFO, 2024-12-10 19:44:14.641, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:44:19.775, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:44:19.830, User serg@yandex.ru logged in successfully
+INFO, 2024-12-10 19:45:30.417, Attempt to change password from user: 31
+INFO, 2024-12-10 19:46:18.588, Attempt to change password from user: 31
+INFO, 2024-12-10 19:47:08.958, Attempt to change password from user: 31
+INFO, 2024-12-10 19:47:25.040, Attempt to change password from user: 31
+INFO, 2024-12-10 19:48:29.249, Attempt to change password from user: 31
+INFO, 2024-12-10 19:48:40.177, Attempt to login from user: serg@yandex.ru
+INFO, 2024-12-10 19:48:40.262, User serg@yandex.ru logged in successfully

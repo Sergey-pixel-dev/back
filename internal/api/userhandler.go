@@ -15,7 +15,7 @@ func (serv *Server) POSTRegisterNewUser(w http.ResponseWriter, r *http.Request) 
 	accessToken, refreshToken, err := serv.uc.RegisterNewUser(usjson.Email, usjson.Password)
 	if err != nil {
 		if err.Error() == "already exists" {
-			helper.WriteJSON(w, http.StatusOK, helper.Envelope{"error": "already exists"}, nil)
+			helper.WriteJSON(w, http.StatusUnauthorized, helper.Envelope{"error": "already exists"}, nil)
 		} else {
 			helper.WriteJSON(w, http.StatusInternalServerError, helper.Envelope{"error": "internal error"}, nil)
 		}
@@ -66,6 +66,38 @@ func (serv *Server) GETUserInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	helper.WriteJSON(w, 200, helper.Envelope{"email": user.Email, "api_key": user.APIKey}, nil)
+}
+
+func (serv *Server) POSTChangePassword(w http.ResponseWriter, r *http.Request) {
+	serv.Logger.LogINFO("POSTChangePassword, POST IP: " + r.RemoteAddr)
+	usjson := structs.ChangePasswordJSON{}
+	helper.ReadJSON(w, r, &usjson)
+	rawToken := r.Header.Get("authorization")
+	if len(rawToken) < 7 {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect token"}, nil)
+		return
+	}
+	rawToken = rawToken[7:]
+	tokenAccess, err := mytoken.ParseToken(rawToken)
+	if err != nil {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect token"}, nil)
+		return
+	}
+	err = serv.uc.ChangePassword(usjson.OldPass, usjson.NewPass, tokenAccess)
+	if err == nil {
+		helper.WriteJSON(w, 200, helper.Envelope{"msg": "password has been changed"}, nil)
+		return
+	}
+	if err.Error() == "incorrect password" {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect password"}, nil)
+		return
+	}
+	if err.Error() == "invalid token" {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "invalid token"}, nil)
+		return
+	}
+	helper.WriteJSON(w, 401, helper.Envelope{"error": "internal error"}, nil)
+
 }
 
 func (serv *Server) RefreshTokenHanlder(w http.ResponseWriter, r *http.Request) {

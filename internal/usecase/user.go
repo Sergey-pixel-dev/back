@@ -2,11 +2,13 @@ package usecase
 
 import (
 	"errors"
-	"github.com/google/uuid"
-	"golang.org/x/crypto/bcrypt"
 	"meteo/internal/libs/mytoken"
 	"meteo/internal/structs"
+	"strconv"
 	"time"
+
+	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (u *Usecase) RegisterNewUser(email string, password string) (*mytoken.Token, *mytoken.Token, error) {
@@ -72,6 +74,40 @@ func (u *Usecase) LoginUser(email string, password string) (*mytoken.Token, *myt
 	u.logger.LogINFO("User " + email + " logged in successfully")
 	return accessToken, refreshToken, nil
 
+}
+func (u *Usecase) ChangePassword(oldPass, newPass string, token *mytoken.Token) error {
+
+	userID := int(token.Payload["userid"].(float64))
+	u.logger.LogINFO("Attempt to change password from user: " + strconv.Itoa(userID))
+	if !token.VerifyToken(func(payload map[string]interface{}) bool {
+		exp, ok := payload["exp"].(float64)
+		if !ok {
+			return false
+		}
+		return int64(exp) > time.Now().Unix()
+	}, "meteo") {
+		return errors.New("invalid token")
+	}
+	user, err := u.dbp.SELECTUserByID(userID)
+	if err != nil {
+		return err
+	}
+	if user == nil { //пользователь с токеном по идее будет всегда в системе
+		return errors.New("мдааа")
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(oldPass))
+	if err != nil {
+		return errors.New("incorrect password")
+	}
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(newPass), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	err2 := u.dbp.UPDATEPassword(userID, string(hashPassword))
+	if err2 != nil {
+		return err2
+	}
+	return nil
 }
 
 func (u *Usecase) GetUserInfo(tokenAccess *mytoken.Token) (*structs.User, error) {

@@ -13,4 +13,5 @@ type DatabaseProvider interface {
 	SELECTLoginUser(email string) (*structs.User, error)
 	SELECTUserByID(userID int) (*structs.User, error)
 	SELECTApiKey(apikey string) bool
+	UPDATEPassword(userID int, password string) error
 }

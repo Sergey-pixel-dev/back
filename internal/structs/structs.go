@@ -38,6 +38,11 @@ type UserJSON struct {
 	Password string `json:"password"`
 }
 
+type ChangePasswordJSON struct {
+	NewPass string `json:"new_password"` // Email - электронная почта
+	OldPass string `json:"old_password"`
+}
+
 type User struct {
 	ID        int    `psql:"id"`         // ID - уникальный идентификатор пользователя
 	Email     string `psql:"email"`      // Email - электронная почта

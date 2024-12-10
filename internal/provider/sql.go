@@ -177,3 +177,11 @@ func (dbp *DatabaseProvider) SELECTUserByID(userID int) (*structs.User, error) {
 	}
 	return &us, nil
 }
+
+func (dbp *DatabaseProvider) UPDATEPassword(userID int, password string) error {
+	_, err := dbp.db.Exec(`update users set password = ($1) where id = ($2)`, password, userID)
+	if err != nil {
+		dbp.logger.LogERRORIfExists(err, "Error UPDATEPassword: ")
+	}
+	return err
+}
