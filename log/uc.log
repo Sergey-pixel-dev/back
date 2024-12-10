@@ -1,31 +1,108 @@
-INFO, 2024-12-07 16:28:47.336, Users withalready exists
-INFO, 2024-12-07 16:36:53.121, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 16:37:53.534, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 16:38:45.414, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 16:39:15.162, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 16:40:18.867, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 16:42:08.044, Users with example@example.com already exists
-INFO, 2024-12-07 16:43:13.532, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 16:52:44.824, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 17:03:29.372, Users with sogninF.serej@yandex.ru already exists
-INFO, 2024-12-07 17:06:13.924, Users with sogninF.serej@yandex.ru already exists
-INFO, 2024-12-07 17:09:26.406, Users with ddfsogninF.serej@yandex.ru already exists
-INFO, 2024-12-07 17:11:25.001, Users with ddfsogninF.serej@yandex.ru already exists
-INFO, 2024-12-07 17:16:22.439, No registered user with sonin.serej@yandex.ru
-INFO, 2024-12-07 17:18:56.158, No registered user with sonin.serej@yandex.ru
-INFO, 2024-12-07 17:25:37.408, No registered user with sonin.serej@yandex.ru
-INFO, 2024-12-07 17:26:00.754, No registered user with sonin.serej@yandex.ru
-INFO, 2024-12-07 18:40:07.126, Wrong password sonin.serej@yandex.ru
-INFO, 2024-12-07 18:41:29.562, Wrong password sonin.serej@yandex.ru
-INFO, 2024-12-07 18:41:32.905, Wrong password sonin.serej@yandex.ru
-INFO, 2024-12-07 18:41:41.885, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 18:44:17.456, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 18:44:49.708, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 18:44:55.657, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 18:45:01.738, Wrong password sonin.serej@yandex.ru
-INFO, 2024-12-07 18:45:07.348, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 18:45:30.639, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 18:47:06.736, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 18:47:13.017, Users with sonin.serej@yandex.ru already exists
-INFO, 2024-12-07 19:01:54.189, No registered user with example@gmail.com
-INFO, 2024-12-07 21:01:30.595, Wrong password sonin.serej@yandex.ru
+INFO, 2024-12-10 16:55:49.330, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 16:55:49.411, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 16:57:01.913, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 16:57:02.019, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 16:58:49.569, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 16:58:49.658, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:00:37.616, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:00:37.667, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:01:43.938, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:01:44.046, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:05:13.799, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:05:13.919, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:07:33.041, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:07:33.138, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:10:05.243, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:10:05.370, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:13:23.210, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:13:23.300, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:13:43.478, Attempt to register new user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:13:43.479, Users with sonin.serej@yandex.ru already exists
+INFO, 2024-12-10 17:13:52.750, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:13:52.847, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:14:06.408, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:14:06.500, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:15:33.666, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:15:33.746, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:16:28.090, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:16:28.187, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:16:52.767, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:16:52.859, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:18:29.744, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:18:29.838, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:20:03.294, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:20:03.384, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:20:18.932, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:20:19.036, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:21:25.445, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:21:25.539, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:22:19.276, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:22:19.402, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:23:40.049, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:23:40.125, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:26:57.441, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:26:57.505, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:27:16.738, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:27:16.827, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:28:24.783, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:28:24.872, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:31:39.791, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:32:11.974, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:33:58.335, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:34:00.378, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:34:57.935, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:34:58.014, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:35:49.635, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:35:49.705, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:36:50.809, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:36:50.909, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:36:57.877, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:36:57.951, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:37:00.783, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:37:00.869, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:38:27.129, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:38:27.189, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:38:35.748, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:38:35.844, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:39:28.127, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:39:32.667, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:39:49.774, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:39:49.899, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:43:57.308, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:43:57.383, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:44:40.387, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:44:40.470, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:45:29.885, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:45:29.978, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:48:21.535, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:48:21.581, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:49:48.244, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:49:48.339, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:51:52.877, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:51:52.967, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:56:48.364, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:56:48.429, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:57:39.405, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:57:39.455, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:59:09.352, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:59:09.443, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 17:59:33.197, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 17:59:33.290, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:07:01.635, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:07:01.714, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:09:04.083, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:09:04.170, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:11:20.911, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:11:21.000, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:13:47.206, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:13:47.299, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:14:14.808, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:14:14.862, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:16:59.849, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:16:59.989, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:19:12.994, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:19:13.083, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:19:37.585, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:19:37.651, User sonin.serej@yandex.ru logged in successfully
+INFO, 2024-12-10 18:28:01.620, Attempt to login from user: sonin.serej@yandex.ru
+INFO, 2024-12-10 18:28:01.711, User sonin.serej@yandex.ru logged in successfully

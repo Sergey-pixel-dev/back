@@ -90,7 +90,7 @@ func (token *Token) SendToken(w http.ResponseWriter) error {
 	return err
 }
 
-func GetToken(rawToken string) (*Token, error) {
+func ParseToken(rawToken string) (*Token, error) {
 	if rawToken == "" {
 		return nil, errors.New("токен не указан")
 	}
@@ -137,14 +137,15 @@ func (token *Token) SendCookieToken(name, path string, w http.ResponseWriter) {
 	cookie := &http.Cookie{
 		Name:     name,
 		Value:    token.Raw,
-		Path:     path,
-		HttpOnly: true,
-		Secure:   true,
-		SameSite: http.SameSiteStrictMode,
+		Path:     "/",                   // Доступ ко всему пути сайта
+		HttpOnly: true,                  // Защищает от JavaScript-доступа
+		MaxAge:   86400,                 // Время жизни cookie (1 день)
+		Secure:   true,                  // Отключено для локальной разработки
+		SameSite: http.SameSiteNoneMode, // Используем Lax для защиты от CSRF
 	}
 	http.SetCookie(w, cookie)
 }
 
 func GetCookieToken(cookie *http.Cookie) (*Token, error) {
-	return GetToken(cookie.Value)
+	return ParseToken(cookie.Value)
 }

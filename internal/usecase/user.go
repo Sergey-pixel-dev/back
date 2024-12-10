@@ -87,3 +87,24 @@ func (u *Usecase) GetUserInfo(tokenAccess *mytoken.Token) (*structs.User, error)
 	user, err := u.dbp.SELECTUserByID(int(tokenAccess.Payload["userid"].(float64)))
 	return user, err
 }
+
+func (u *Usecase) RefreshToken(RToken *mytoken.Token) (*mytoken.Token, *mytoken.Token, error) {
+	if !RToken.VerifyToken(func(payload map[string]interface{}) bool {
+		exp, ok := payload["exp"].(float64)
+		if !ok {
+			return false
+		}
+		return int64(exp) > time.Now().Unix()
+	}, "meteo") {
+		return nil, nil, errors.New("invalid token")
+	}
+	accessToken, _ := mytoken.NewToken(map[string]interface{}{"alg": "HS256", "typ": "JWT"},
+		map[string]interface{}{"userid": RToken.Payload["userid"], "exp": time.Now().Add(time.Hour).Unix()},
+		"meteo",
+	)
+	refreshToken, _ := mytoken.NewToken(map[string]interface{}{"alg": "HS256", "typ": "JWT"},
+		map[string]interface{}{"userid": RToken.Payload["userid"], "exp": time.Now().Add(24 * time.Hour).Unix()},
+		"meteo",
+	)
+	return accessToken, refreshToken, nil
+}

@@ -13,4 +13,5 @@ type Usecase interface {
 	RegisterNewUser(email string, password string) (*mytoken.Token, *mytoken.Token, error)
 	LoginUser(email string, password string) (*mytoken.Token, *mytoken.Token, error)
 	GetUserInfo(tokenAccess *mytoken.Token) (*structs.User, error)
+	RefreshToken(RToken *mytoken.Token) (*mytoken.Token, *mytoken.Token, error)
 }

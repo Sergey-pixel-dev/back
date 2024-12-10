@@ -32,8 +32,8 @@ func (serv *Server) POSTLoginUser(w http.ResponseWriter, r *http.Request) {
 	helper.ReadJSON(w, r, &usjson)
 	accessToken, refreshToken, err := serv.uc.LoginUser(usjson.Email, usjson.Password)
 	if err == nil {
-		accessToken.SendToken(w)
 		refreshToken.SendCookieToken("refresh_token", "/user/login/refresh", w)
+		accessToken.SendToken(w)
 		return
 	}
 	if err.Error() == "Incorrect email" || err.Error() == "Wrong password" {
@@ -49,12 +49,13 @@ func (serv *Server) POSTLoginUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (serv *Server) GETUserInfo(w http.ResponseWriter, r *http.Request) {
-	rawToken := r.Header.Get("authorization")[7:]
-	if rawToken == "" {
+	rawToken := r.Header.Get("authorization")
+	if len(rawToken) < 7 {
 		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect token"}, nil)
 		return
 	}
-	tokenAccess, err := mytoken.GetToken(rawToken)
+	rawToken = rawToken[7:]
+	tokenAccess, err := mytoken.ParseToken(rawToken)
 	if err != nil {
 		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect token"}, nil)
 		return
@@ -66,16 +67,39 @@ func (serv *Server) GETUserInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	helper.WriteJSON(w, 200, helper.Envelope{"email": user.Email, "api_key": user.APIKey}, nil)
 }
+
+func (serv *Server) RefreshTokenHanlder(w http.ResponseWriter, r *http.Request) {
+	cookieToken, err := r.Cookie("refresh_token")
+	if err != nil {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect token23"}, nil)
+		return
+	}
+	refreshToken, err := mytoken.GetCookieToken(cookieToken)
+	if err != nil {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "incorrect token12342"}, nil)
+		return
+	}
+	accessToken, refreshToken, err := serv.uc.RefreshToken(refreshToken)
+	if err == nil {
+		accessToken.SendToken(w)
+		refreshToken.SendCookieToken("refresh_token", "/user/login/refresh", w)
+		return
+	} else {
+		helper.WriteJSON(w, 401, helper.Envelope{"error": "invalid token"}, nil)
+		return
+	}
+}
+
 func (serv *Server) corsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:5500")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	w.Header().Set("Access-Control-Allow-Headers", "Cookie, Content-Type, Authorization, Set-Cookie")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.WriteHeader(http.StatusOK)
 }
 func (serv *Server) corsMiddlewire(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:5500")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	w.Header().Set("Access-Control-Allow-Headers", "Cookie, Content-Type, Authorization, Set-Cookie")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 }
